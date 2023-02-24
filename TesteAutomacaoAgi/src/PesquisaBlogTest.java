@@ -1,12 +1,14 @@
 package TesteAutomacaoAgi.src;
 
 
+import org.apache.tomcat.util.http.fileupload.FileUtils;
+import org.aspectj.util.FileUtil;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+import java.io.*;
 
 import java.util.Locale;
 
@@ -21,7 +23,7 @@ class PesquisaBlogTest {
     String palavraComNavecacao = "Celular";
 
     @Test
-    public void clicarNoMenuMobileClicarNaLupaPesquisarPorCDBParaTesteMenorResolucao() {
+    public void clicarNoMenuMobileClicarNaLupaPesquisarPorCDBParaTesteMenorResolucao() throws IOException {
         // Abre a tela de navegação com tamanho de necessario para menu Mobile, localiza o menu, a caixa de pesquisa e insere um termo existente
         System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
         WebDriver navegador = new ChromeDriver();
@@ -30,6 +32,9 @@ class PesquisaBlogTest {
         navegador.findElement(className("mobile-search")).click();
         navegador.findElement(By.cssSelector(".mobile-search .search-field")).sendKeys(palavraChaveSucesso);
         navegador.findElement(By.cssSelector(".mobile-search .search-field")).submit();
+
+        File screenshotFile = ((TakesScreenshot) navegador).getScreenshotAs(OutputType.FILE);
+        FileUtil.copyFile(screenshotFile, new File("cenariodetesteprint/screenshot1.png"));
 
         // Verifica se a mensagem de "palavraChaveSucesso" foi exibida
         WebElement resultadoDaBusca = navegador.findElement(By.className("archive-title"));
@@ -42,7 +47,7 @@ class PesquisaBlogTest {
     }
 
     @Test
-    public void clicarNoMenuMobileClicarNaLupaPesquisarPorDataDePublicacaoNaoEncontraMenorResolucao() {
+    public void clicarNoMenuMobileClicarNaLupaPesquisarPorDataDePublicacaoNaoEncontraMenorResolucao() throws IOException {
         // Abre a tela de navegação com tamanho de necessario para menu Mobile, localiza o menu, a caixa de pesquisa e insere um termo inexistente
         System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
         WebDriver navegador = new ChromeDriver();
@@ -52,10 +57,15 @@ class PesquisaBlogTest {
         navegador.findElement(By.cssSelector(".mobile-search .search-field")).sendKeys(PalavraChaveErro);
         navegador.findElement(By.cssSelector(".mobile-search .search-field")).submit();
 
+        File screenshotFile = ((TakesScreenshot) navegador).getScreenshotAs(OutputType.FILE);
+        FileUtil.copyFile(screenshotFile, new File("cenariodetesteprint/screenshot2.png"));
+
         // Verifica se a mensagem de "Nenhum resultado" foi exibida
         WebElement resultadoDaBusca = navegador.findElement(By.className("entry-title"));
         String expectedText = String.format("Nenhum resultado");
         Assert.assertEquals(expectedText, resultadoDaBusca.getText());
+
+
 
         //Exibe mensagem de sucesso e fecha o navegador
         System.out.println("Teste com sucesso");
@@ -63,18 +73,21 @@ class PesquisaBlogTest {
     }
 
     @Test
-    public void clicarNaLupaPesquisarPorCDB() {
+    public void clicarNaLupaPesquisarPorCDB() throws IOException {
         // Abre a tela de navegação, maximiza a janela, localiza a caixa de pesquisa e insere um termo existente
         System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
         WebDriver navegador = new ChromeDriver();
         navegador.navigate().to("https://blogdoagi.com.br/");
         navegador.manage().window().maximize();
-        navegador.findElement(By.id("search-open")).click();
+        navegador.findElement(id("search-open")).click();
         navegador.findElement(By.name("s")).sendKeys(palavraChaveSucesso);
         navegador.findElement(By.name("s")).submit();
 
+        File screenshotFile = ((TakesScreenshot) navegador).getScreenshotAs(OutputType.FILE);
+        FileUtil.copyFile(screenshotFile, new File("cenariodetesteprint/screenshot3.png"));
+
         // Verifica se a mensagem de "palavraChaveSucesso" foi exibida
-        WebElement resultadoDaBusca = navegador.findElement(By.className("archive-title"));
+        WebElement resultadoDaBusca = navegador.findElement(className("archive-title"));
         String expectedText = String.format("Resultados da busca por: %s", palavraChaveSucesso);
         Assert.assertEquals(expectedText, resultadoDaBusca.getText());
 
@@ -84,7 +97,7 @@ class PesquisaBlogTest {
     }
 
     @Test
-    public void clicarNaLupaPesquisarPorDataDePublicacaoNaoEncontra() {
+    public void clicarNaLupaPesquisarPorDataDePublicacaoNaoEncontra() throws IOException {
         // Abre a tela de navegação, maximiza a janela, localiza a caixa de pesquisa e insere um termo inexistente
         System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
         WebDriver navegador = new ChromeDriver();
@@ -93,6 +106,9 @@ class PesquisaBlogTest {
         navegador.findElement(By.id("search-open")).click();
         navegador.findElement(By.name("s")).sendKeys(PalavraChaveErro);
         navegador.findElement(By.name("s")).submit();
+
+        File screenshotFile = ((TakesScreenshot) navegador).getScreenshotAs(OutputType.FILE);
+        FileUtil.copyFile(screenshotFile, new File("cenariodetesteprint/screenshot4.png"));
 
         // Verifica se a mensagem de "Nenhum resultado" foi exibida
         WebElement resultadoDaBusca = navegador.findElement(By.cssSelector("h1.entry-title"));
@@ -105,7 +121,7 @@ class PesquisaBlogTest {
     }
 
     @Test
-    public void clicarNaLupaPesquisarVerificaExistenciaDeConteudoAbrePrimeiroDaLista() {
+    public void clicarNaLupaPesquisarVerificaExistenciaDeConteudoAbrePrimeiroDaLista() throws IOException {
         // Abre a tela de navegação, maximiza a janela, localiza a caixa de pesquisa e insere um termo inexistente
         System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
         WebDriver navegador = new ChromeDriver();
@@ -123,6 +139,9 @@ class PesquisaBlogTest {
         //Seleciona e entra na ultima matéria postada
         navegador.findElement(By.cssSelector("h2.entry-title")).click();
 
+        File screenshotFile = ((TakesScreenshot) navegador).getScreenshotAs(OutputType.FILE);
+        FileUtil.copyFile(screenshotFile, new File("cenariodetesteprint/screenshot5.png"));
+
         // Verifica se o titulo da matéria tem "palavraComNavecacao" e entra na matéria
         WebElement entraNaultimaMateria = navegador.findElement(By.className("entry-title"));
         String expectedTextResult = String.format("%s", palavraComNavecacao);
@@ -135,7 +154,7 @@ class PesquisaBlogTest {
     }
 
     @Test
-    public void clicarNaLupaPesquisarSemArgumentos() {
+    public void clicarNaLupaPesquisarSemArgumentos() throws IOException {
         // Abre a tela de navegação, maximiza a janela, localiza a caixa de pesquisa sem termo
         System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
         WebDriver navegador = new ChromeDriver();
@@ -143,6 +162,10 @@ class PesquisaBlogTest {
         navegador.manage().window().maximize();
         navegador.findElement(By.id("search-open")).click();
         navegador.findElement(By.name("s")).submit();
+
+
+        File screenshotFile = ((TakesScreenshot) navegador).getScreenshotAs(OutputType.FILE);
+        FileUtil.copyFile(screenshotFile, new File("cenariodetesteprint/screenshot6.png"));
 
         // Verifica se a mensagem de "Resultados da busca por:" foi exibida
         WebElement resultadoDaBusca = navegador.findElement(By.cssSelector("h1.archive-title"));
