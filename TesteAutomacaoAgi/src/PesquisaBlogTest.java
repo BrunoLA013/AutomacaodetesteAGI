@@ -22,6 +22,7 @@ class PesquisaBlogTest {
 
     @Test
     public void clicarNoMenuMobileClicarNaLupaPesquisarPorCDBParaTesteMenorResolucao() {
+        // Abre a tela de navegação com tamanho de necessario para menu Mobile, localiza o menu, a caixa de pesquisa e insere um termo existente
         System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
         WebDriver navegador = new ChromeDriver();
         navegador.navigate().to("https://blogdoagi.com.br/");
@@ -30,35 +31,40 @@ class PesquisaBlogTest {
         navegador.findElement(By.cssSelector(".mobile-search .search-field")).sendKeys(palavraChaveSucesso);
         navegador.findElement(By.cssSelector(".mobile-search .search-field")).submit();
 
+        // Verifica se a mensagem de "palavraChaveSucesso" foi exibida
         WebElement resultadoDaBusca = navegador.findElement(By.className("archive-title"));
         String expectedText = String.format("Resultados da busca por: %s", palavraChaveSucesso);
         Assert.assertEquals(expectedText, resultadoDaBusca.getText());
 
+        //Exibe mensagem de sucesso e fecha o navegador
         System.out.println("Teste com sucesso clicar No Menu Mobile Clicar Na Lupa Pesquisar Por CDB Para Teste Menor Resolucao");
         navegador.quit();
     }
 
     @Test
     public void clicarNoMenuMobileClicarNaLupaPesquisarPorDataDePublicacaoNaoEncontraMenorResolucao() {
+        // Abre a tela de navegação com tamanho de necessario para menu Mobile, localiza o menu, a caixa de pesquisa e insere um termo inexistente
         System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
         WebDriver navegador = new ChromeDriver();
-
         navegador.navigate().to("https://blogdoagi.com.br/");
         navegador.findElement(id("overlay-open")).click();
         navegador.findElement(className("mobile-search")).click();
         navegador.findElement(By.cssSelector(".mobile-search .search-field")).sendKeys(PalavraChaveErro);
         navegador.findElement(By.cssSelector(".mobile-search .search-field")).submit();
 
+        // Verifica se a mensagem de "Nenhum resultado" foi exibida
         WebElement resultadoDaBusca = navegador.findElement(By.className("entry-title"));
         String expectedText = String.format("Nenhum resultado");
         Assert.assertEquals(expectedText, resultadoDaBusca.getText());
 
+        //Exibe mensagem de sucesso e fecha o navegador
         System.out.println("Teste com sucesso");
         navegador.quit();
     }
 
     @Test
     public void clicarNaLupaPesquisarPorCDB() {
+        // Abre a tela de navegação, maximiza a janela, localiza a caixa de pesquisa e insere um termo existente
         System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
         WebDriver navegador = new ChromeDriver();
         navegador.navigate().to("https://blogdoagi.com.br/");
@@ -67,17 +73,19 @@ class PesquisaBlogTest {
         navegador.findElement(By.name("s")).sendKeys(palavraChaveSucesso);
         navegador.findElement(By.name("s")).submit();
 
+        // Verifica se a mensagem de "palavraChaveSucesso" foi exibida
         WebElement resultadoDaBusca = navegador.findElement(By.className("archive-title"));
         String expectedText = String.format("Resultados da busca por: %s", palavraChaveSucesso);
         Assert.assertEquals(expectedText, resultadoDaBusca.getText());
 
+        //Exibe mensagem de sucesso e fecha o navegador
         System.out.println("Teste com sucesso");
         navegador.quit();
     }
 
     @Test
     public void clicarNaLupaPesquisarPorDataDePublicacaoNaoEncontra() {
-        // Localiza a caixa de pesquisa e insere um termo inexistente
+        // Abre a tela de navegação, maximiza a janela, localiza a caixa de pesquisa e insere um termo inexistente
         System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
         WebDriver navegador = new ChromeDriver();
         navegador.navigate().to("https://blogdoagi.com.br/");
@@ -90,13 +98,15 @@ class PesquisaBlogTest {
         WebElement resultadoDaBusca = navegador.findElement(By.cssSelector("h1.entry-title"));
         String expectedText = String.format("Nenhum resultado");
         Assert.assertEquals(expectedText, resultadoDaBusca.getText());
+
+        //Exibe mensagem de sucesso e fecha o navegador
         System.out.println("Teste com sucesso quando clicarNaLupaPesquisarPorDataDePublicacao");
         navegador.quit();
     }
 
     @Test
     public void clicarNaLupaPesquisarVerificaExistenciaDeConteudoAbrePrimeiroDaLista() {
-        // Localiza a caixa de pesquisa e insere um termo inexistente
+        // Abre a tela de navegação, maximiza a janela, localiza a caixa de pesquisa e insere um termo inexistente
         System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
         WebDriver navegador = new ChromeDriver();
         navegador.navigate().to("https://blogdoagi.com.br/");
@@ -116,17 +126,17 @@ class PesquisaBlogTest {
         // Verifica se o titulo da matéria tem "palavraComNavecacao" e entra na matéria
         WebElement entraNaultimaMateria = navegador.findElement(By.className("entry-title"));
         String expectedTextResult = String.format("%s", palavraComNavecacao);
-        String actualTextResult = entraNaultimaMateria.getText();
         Assert.assertTrue(expectedTextResult, entraNaultimaMateria.getText().contains(palavraComNavecacao.toLowerCase(Locale.ROOT)));
 
-        //Exibe menssagem no log de sucesso
+
+        //Exibe mensagem de sucesso e fecha o navegador
         System.out.println("Teste com sucesso");
         navegador.quit();
     }
 
     @Test
     public void clicarNaLupaPesquisarSemArgumentos() {
-        // Localiza a caixa de pesquisa e pesquisar sem termo
+        // Abre a tela de navegação, maximiza a janela, localiza a caixa de pesquisa sem termo
         System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
         WebDriver navegador = new ChromeDriver();
         navegador.navigate().to("https://blogdoagi.com.br/");
@@ -134,15 +144,15 @@ class PesquisaBlogTest {
         navegador.findElement(By.id("search-open")).click();
         navegador.findElement(By.name("s")).submit();
 
-        // Verifica se a mensagem de "palavraComNavecacao" foi exibida
+        // Verifica se a mensagem de "Resultados da busca por:" foi exibida
         WebElement resultadoDaBusca = navegador.findElement(By.cssSelector("h1.archive-title"));
         String expectedText = String.format("Resultados da busca por:");
         Assert.assertEquals(expectedText, resultadoDaBusca.getText());
 
-        //Exibe menssagem no log de sucesso
+
+        //Exibe mensagem de sucesso e fecha o navegador
         System.out.println("Teste com sucesso");
         navegador.quit();
     }
-
 
 }
