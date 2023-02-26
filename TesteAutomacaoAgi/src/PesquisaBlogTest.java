@@ -1,22 +1,20 @@
 package TesteAutomacaoAgi.src;
 
 
-import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.aspectj.util.FileUtil;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import java.io.*;
-
+import java.io.File;
+import java.io.IOException;
 import java.util.Locale;
 
 import static org.openqa.selenium.By.className;
 import static org.openqa.selenium.By.id;
 
 class PesquisaBlogTest {
-
 
     String palavraChaveSucesso = "CDB";
     String PalavraChaveErro = "13/08/2021";
@@ -33,6 +31,7 @@ class PesquisaBlogTest {
         navegador.findElement(By.cssSelector(".mobile-search .search-field")).sendKeys(palavraChaveSucesso);
         navegador.findElement(By.cssSelector(".mobile-search .search-field")).submit();
 
+        // Tira print da tela na hora que realiza a ação programada
         File screenshotFile = ((TakesScreenshot) navegador).getScreenshotAs(OutputType.FILE);
         FileUtil.copyFile(screenshotFile, new File("cenariodetesteprint/screenshot1.png"));
 
@@ -57,6 +56,7 @@ class PesquisaBlogTest {
         navegador.findElement(By.cssSelector(".mobile-search .search-field")).sendKeys(PalavraChaveErro);
         navegador.findElement(By.cssSelector(".mobile-search .search-field")).submit();
 
+        // Tira print da tela na hora que realiza a ação programada
         File screenshotFile = ((TakesScreenshot) navegador).getScreenshotAs(OutputType.FILE);
         FileUtil.copyFile(screenshotFile, new File("cenariodetesteprint/screenshot2.png"));
 
@@ -64,8 +64,6 @@ class PesquisaBlogTest {
         WebElement resultadoDaBusca = navegador.findElement(By.className("entry-title"));
         String expectedText = String.format("Nenhum resultado");
         Assert.assertEquals(expectedText, resultadoDaBusca.getText());
-
-
 
         //Exibe mensagem de sucesso e fecha o navegador
         System.out.println("Teste com sucesso");
@@ -83,6 +81,7 @@ class PesquisaBlogTest {
         navegador.findElement(By.name("s")).sendKeys(palavraChaveSucesso);
         navegador.findElement(By.name("s")).submit();
 
+        // Tira print da tela na hora que realiza a ação programada
         File screenshotFile = ((TakesScreenshot) navegador).getScreenshotAs(OutputType.FILE);
         FileUtil.copyFile(screenshotFile, new File("cenariodetesteprint/screenshot3.png"));
 
@@ -107,6 +106,7 @@ class PesquisaBlogTest {
         navegador.findElement(By.name("s")).sendKeys(PalavraChaveErro);
         navegador.findElement(By.name("s")).submit();
 
+        // Tira print da tela na hora que realiza a ação programada
         File screenshotFile = ((TakesScreenshot) navegador).getScreenshotAs(OutputType.FILE);
         FileUtil.copyFile(screenshotFile, new File("cenariodetesteprint/screenshot4.png"));
 
@@ -139,6 +139,7 @@ class PesquisaBlogTest {
         //Seleciona e entra na ultima matéria postada
         navegador.findElement(By.cssSelector("h2.entry-title")).click();
 
+        // Tira print da tela na hora que realiza a ação programada
         File screenshotFile = ((TakesScreenshot) navegador).getScreenshotAs(OutputType.FILE);
         FileUtil.copyFile(screenshotFile, new File("cenariodetesteprint/screenshot5.png"));
 
@@ -146,7 +147,6 @@ class PesquisaBlogTest {
         WebElement entraNaultimaMateria = navegador.findElement(By.className("entry-title"));
         String expectedTextResult = String.format("%s", palavraComNavecacao);
         Assert.assertTrue(expectedTextResult, entraNaultimaMateria.getText().contains(palavraComNavecacao.toLowerCase(Locale.ROOT)));
-
 
         //Exibe mensagem de sucesso e fecha o navegador
         System.out.println("Teste com sucesso");
@@ -163,7 +163,7 @@ class PesquisaBlogTest {
         navegador.findElement(By.id("search-open")).click();
         navegador.findElement(By.name("s")).submit();
 
-
+        // Tira print da tela na hora que realiza a ação programada
         File screenshotFile = ((TakesScreenshot) navegador).getScreenshotAs(OutputType.FILE);
         FileUtil.copyFile(screenshotFile, new File("cenariodetesteprint/screenshot6.png"));
 
@@ -171,7 +171,6 @@ class PesquisaBlogTest {
         WebElement resultadoDaBusca = navegador.findElement(By.cssSelector("h1.archive-title"));
         String expectedText = String.format("Resultados da busca por:");
         Assert.assertEquals(expectedText, resultadoDaBusca.getText());
-
 
         //Exibe mensagem de sucesso e fecha o navegador
         System.out.println("Teste com sucesso");
