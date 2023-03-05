@@ -60,15 +60,15 @@ public class PesquisaPagina {
         FileUtil.copyFile(screenshotFile, new File("cenariodetesteprint/" + fileName));
     }
 
-    public void verificaSePalavraComSucessoFoiExibida(String texto) {
-        WebElement resultadoDaBusca = this.navegador.findElement(By.className("archive-title"));
-        String expectedText = String.format("Resultados da busca por: %s", texto);
-        try {
-            Assert.assertEquals(expectedText, resultadoDaBusca.getText());
-        } catch (AssertionError e) {
-            System.out.println("Erro ao verificar se a palavra foi exibida com sucesso: " + e.getMessage());
-        }
-    }
+            public void verificaSePalavraComSucessoFoiExibida(String texto) {
+                WebElement resultadoDaBusca = this.navegador.findElement(By.className("archive-title"));
+                String expectedText = String.format("Resultados da busca por: %s", texto);
+                try {
+                    Assert.assertEquals(expectedText, resultadoDaBusca.getText());
+                } catch (AssertionError e) {
+                    System.out.println("Erro ao verificar se a palavra foi exibida com sucesso: " + e.getMessage());
+                }
+            }
 
     public void verificaENavega(String texto) {
 
